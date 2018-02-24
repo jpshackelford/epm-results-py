@@ -1,0 +1,17 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/*.pyc": true
+      },
+
+      "python.unitTest.pyTestEnabled": true,
+
+      "python.unitTest.pyTestArgs": [
+        "-vv",
+        "."
+      ],
+}

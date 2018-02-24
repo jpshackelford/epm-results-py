@@ -1,0 +1,27 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "pytest",
+            "type": "shell",
+            "command": "pytest -vv",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "pyclean",
+            "type": "shell",
+            "command": "pycleanery",
+            "problemMatcher": []
+        },
+        {
+            "label": "redis-server",
+            "type": "process",
+            "command": "redis-server"
+        }
+    ]
+}

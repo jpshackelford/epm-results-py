@@ -1,0 +1,57 @@
+import:
+    MockDevice:  'mock.Mock'
+
+construct:
+    MCP1: 'MockDevice(name="mcp1")'
+    MCP2: 'MockDevice(name="mcp2")'
+    Pi:   'MockDevice(name="Pi")'
+    
+input:
+    test_trigger:
+
+        'Open Arm|-9':
+            device: MCP1
+            pin: 1
+            pullup: True
+            xpos: 0
+            ypos: 0
+
+    epm_sensors:
+        
+        'Open Arm|-9':
+            device: MCP1
+            pin: 1
+            pullup: True
+            xpos: 0
+            ypos: 0
+        
+        'Open Arm|-8':     
+            device: MCP2
+            pin: 2
+            pullup: True
+            xpos: 0
+            ypos: 0
+            
+    buttons:
+        
+        'Reset Button':
+            device: MCP2
+            pin: 3
+
+output:
+    
+    leds:        
+
+        'Power':
+            device: Pi
+            pin: 4
+
+    buzzers:
+        
+        'Buzzer-1':
+            device: Pi
+            pin: 5
+
+        'Buzzer-2':
+            device: Pi
+            pin: 6
