@@ -5,6 +5,7 @@ from mock import Mock, call
 
 import logging
 import redis
+import time
 
 from epmresults import SensorsDaemon
 from epmresults import EPM
@@ -74,10 +75,27 @@ class TestSensorsDaemon(object):
         ]
         
         assert test_mock.mock_calls == [
-            call(sd.rr, sd.epm, sd.logger),
+            call(sd.rr, sd.epm, sd.logger, sd, test_length=600, sleep_secs = 0.001),
             call().run(),
-            call(sd.rr, sd.epm, sd.logger),
+            call(sd.rr, sd.epm, sd.logger, sd, test_length=600, sleep_secs = 0.001),
             call().run()            
         ]
         
-        
+    def test_end_to_end(self):
+        sd = SensorsDaemonTester(
+            yaml_path = fpath('sample_02_device_config.yaml'),
+            namespace = 'fake_03',
+            test_secs = 5,
+            loop_count = 1,
+            scans_per_sec = 10
+        )
+        sd.run()
+
+class SensorsDaemonTester(SensorsDaemon):
+
+    def initialize_epm(self):
+        self.logger.info("reading " + self.yaml_path)                        
+        self.epm = EPM(self.logger, self.epm_yaml_stream())
+        self.epm.initialize()
+        self.epm.devcfg.device('MCP1').set_epm(self.epm)
+    

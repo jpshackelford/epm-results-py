@@ -1,0 +1,220 @@
+import:
+    FakeDevice: 'epmresults.FakeDevice'
+
+construct:
+    MCP1: 'FakeDevice()'
+    MCP2: 'FakeDevice()'
+    MCP3: 'FakeDevice()'
+    
+input:
+    test_trigger:
+
+        'Open Arm|-17':
+            device: MCP1
+            pin: 0
+            pullup: True
+
+    epm_sensors:
+        
+        'Open Arm|-17':
+            device: MCP1
+            pin: 0
+            pullup: True
+
+        'Open Arm|-15':
+            device: MCP1
+            pin: 1
+            pullup: True
+
+        'Open Arm|-13':
+            device: MCP1
+            pin: 2
+            pullup: True
+
+        'Open Arm|-11':
+            device: MCP1
+            pin: 3
+            pullup: True
+        
+        'Open Arm|-09':
+            device: MCP1
+            pin: 4
+            pullup: True
+
+        'Open Arm|-07':
+            device: MCP1
+            pin: 5
+            pullup: True
+
+        'Open Arm|-05':
+            device: MCP1
+            pin: 6
+            pullup: True
+        'Open Arm|-03':
+            device: MCP1
+            pin: 7
+            pullup: True
+
+        'Open Arm|-01':
+            device: MCP1
+            pin: 8
+            pullup: True
+
+        'Open Arm|01':
+            device: MCP1
+            pin: 9
+            pullup: True
+
+        'Open Arm|03':
+            device: MCP1
+            pin: 10
+            pullup: True
+
+        'Open Arm|05':
+            device: MCP1
+            pin: 11
+            pullup: True
+
+        'Open Arm|07':
+            device: MCP1
+            pin: 12
+            pullup: True
+        
+        'Open Arm|09':
+            device: MCP1
+            pin: 13
+            pullup: True
+
+        'Open Arm|11':
+            device: MCP1
+            pin: 14
+            pullup: True
+
+        'Open Arm|13':
+            device: MCP1
+            pin: 15
+            pullup: True
+
+        'Open Arm|15':
+            device: MCP2
+            pin: 16
+            pullup: True
+
+        'Open Arm|17':
+            device: MCP2
+            pin: 17
+            pullup: True
+
+        'Closed Arm|-17':
+            device: MCP2
+            pin: 18
+            pullup: True
+
+        'Closed Arm|-15':
+            device: MCP2
+            pin: 19
+            pullup: True
+
+        'Closed Arm|-13':
+            device: MCP2
+            pin: 20
+            pullup: True
+
+        'Closed Arm|-11':
+            device: MCP2
+            pin: 21
+            pullup: True
+        
+        'Closed Arm|-09':
+            device: MCP2
+            pin: 22
+            pullup: True
+
+        'Closed Arm|-07':
+            device: MCP2
+            pin: 23
+            pullup: True
+
+        'Closed Arm|-05':
+            device: MCP2
+            pin: 24
+            pullup: True
+
+        'Closed Arm|-03':
+            device: MCP2
+            pin: 25
+            pullup: True
+
+        'Closed Arm|-01':
+            device: MCP2
+            pin: 26
+            pullup: True
+
+        'Closed Arm|01':
+            device: MCP2
+            pin: 27
+            pullup: True
+
+        'Closed Arm|03':
+            device: MCP2
+            pin: 28
+            pullup: True
+
+        'Closed Arm|05':
+            device: MCP2
+            pin: 29
+            pullup: True
+
+        'Closed Arm|07':
+            device: MCP2
+            pin: 30
+            pullup: True
+        
+        'Closed Arm|09':
+            device: MCP2
+            pin: 31
+            pullup: True
+
+        'Closed Arm|11':
+            device: MCP3
+            pin: 32
+            pullup: True
+
+        'Closed Arm|13':
+            device: MCP3
+            pin: 33
+            pullup: True
+
+        'Closed Arm|15':
+            device: MCP3
+            pin: 34
+            pullup: True
+
+        'Closed Arm|17':
+            device: MCP3
+            pin: 35
+            pullup: True
+
+    buttons:
+        
+        'Reset Button':
+            device: MCP3
+            pin: 60
+
+output:
+    
+    leds:        
+
+        'Power':
+            device: MCP3
+            pin: 61
+
+    buzzers:
+        
+        'Buzzer-1':
+            device: MCP3
+            pin: 62
+
+        'Buzzer-2':
+            device: MCP3
+            pin: 63

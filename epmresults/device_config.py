@@ -89,10 +89,14 @@ class DeviceConfig(object):
         self.configure_pins()
         
     def initialize_devices(self, y):
-        for g,lib in y['import'].iteritems():
-            mod, cls = lib.rsplit('.', 1)
-            globals()[mod] = importlib.import_module(mod)
-            globals()[g]   = eval(lib)
+        if 'import' in y.keys() and len(y['import']) > 0:
+            for g,lib in y['import'].iteritems():
+                if lib.count('.') > 0:
+                    mod, cls = lib.rsplit('.', 1)
+                else:
+                    mod = lib
+                globals()[mod] = importlib.import_module(mod)
+                globals()[g]   = eval(lib)
         for key, constructor in y['construct'].iteritems():
             self.devices[key] = eval(constructor)
 

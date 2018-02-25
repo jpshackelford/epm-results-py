@@ -1,7 +1,7 @@
 # Handles communication with Redis
 # for EPM Test results.
 
-import redis
+from redis import StrictRedis
 import time
 import sys
 
@@ -15,7 +15,7 @@ class RedisResults(object):
         if redis:
             self.r = redis
         else:
-            self.r = redis.StrictRedis(host=host,port=port,db=db)        
+            self.r = StrictRedis(host=host,port=port,db=db)        
     
     def redis(self):
         return self.r
@@ -24,7 +24,7 @@ class RedisResults(object):
         self._namespace = str(namespace)
     
     def namespace(self,key):
-        return self._namespace + "_" + key
+        return self._namespace + "." + key
         
     def test_name(self,test_number):
         return self.namespace('test_') + str(test_number).zfill(4)

@@ -13,13 +13,13 @@ class Position(object):
     
 class SingleTestRun(object):
     
-    def __init__(self, redis_results, epm, logger, daemon, test_length=600, sleep_time=0.001):                
+    def __init__(self, redis_results, epm, logger, daemon, test_length=600, sleep_secs=0.001):                
         self.rr               = redis_results
         self.epm              = epm
         self.logger           = logger
         self.daemon           = daemon
         self.test_length      = test_length
-        self.sleep_time       = sleep_time
+        self.sleep_secs       = sleep_secs
         self.recent_pos       = []
         self.positions        = []
         self.test_aborted     = False
@@ -42,7 +42,7 @@ class SingleTestRun(object):
             if self.remaining_time() < 15:
                 self.epm.signal_prepare_to_stop()
                         
-            time.sleep(self.sleep_time)
+            time.sleep(self.sleep_secs)
                 
         self.complete_test()
     

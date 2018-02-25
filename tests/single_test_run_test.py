@@ -41,7 +41,7 @@ def daemon():
 def t(rr,epm,log,daemon,test_len=1.0,sleep_secs=0.1):
     trun = SingleTestRun( rr, epm, log, daemon,
                           test_length = test_len,
-                          sleep_time  = sleep_secs)
+                          sleep_secs  = sleep_secs)
     return trun
 
 

@@ -4,6 +4,7 @@ from epmresults.epm              import EPM
 from epmresults.single_test_run  import SingleTestRun
 from epmresults.sheetsd          import SheetsDaemon
 from epmresults.epmsensorsd      import SensorsDaemon
+from epmresults.fake_device      import FakeDevice
 
 __version__ = '0.0.1'
 VERSION = tuple(map(int, __version__.split('.')))
@@ -15,5 +16,6 @@ __all__ = [
     EPM,
     SingleTestRun,
     SheetsDaemon,
-    SensorsDaemon
+    SensorsDaemon,
+    FakeDevice
 ]

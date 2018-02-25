@@ -24,8 +24,13 @@ class SensorsDaemon(Service):
         self.results_class       = kwargs.pop('results_class', RedisResults)
         self.loop_count          = kwargs.pop('loop_count', None)
         self.substitute_logger   = kwargs.pop('logger', None)
+
         self.yaml_path           = kwargs.pop('yaml_path', '/etc/epm.yaml')
-        
+        self.namespace           = kwargs.pop('namespace', None)
+        self.test_secs           = kwargs.pop('test_secs', None)
+        self.scans_per_sec       = kwargs.pop('scans_per_sec', 1000)
+        self.sleep_secs          = kwargs.pop('sleep_secs', 1.0 /self.scans_per_sec)
+
         super(SensorsDaemon,self).__init__('epmsensorsd',**kwargs)        
         self.logger.addHandler(SysLogHandler(address=find_syslog(),
                                facility=SysLogHandler.LOG_DAEMON))
@@ -42,7 +47,10 @@ class SensorsDaemon(Service):
         while(not self.got_sigterm()):
             self.epm.signal_ready()
             self.epm.detect_test_start()
-            test = self.test_class(self.rr, self.epm, self.logger)
+            secs = int(self.test_secs or 600)
+            test = self.test_class(self.rr, self.epm, self.logger, self, 
+                                   test_length = secs, 
+                                   sleep_secs = self.sleep_secs )
             test.run()
             self.epm.signal_test_complete()
             
@@ -62,6 +70,7 @@ class SensorsDaemon(Service):
             self.rr = self.results_class(redis=self.r)
         else:
             self.rr = self.results_class()
+        if self.namespace: self.rr.set_namespace(self.namespace)
         self.rr.redis().ping()
         
     def initialize_epm(self):
