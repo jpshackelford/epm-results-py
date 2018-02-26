@@ -3,10 +3,7 @@ import time
 class FakeDevice(object):
     
     def __init__(self):
-        self.epm = None
-        self._sensor_mask = None
-        self.pin_to_signal = 0
-        self.input_vals = self.sensor_vals_for_pin(0)
+        self.input_vals = None
 
     def setup(self, pin, purpose):
         return None
@@ -15,31 +12,39 @@ class FakeDevice(object):
         return None
 
     def input(self, pin):
-        if self.input_vals[pin] == None:
-            # we are scanning this pin for the second time, so consider this a new scan
-            self.pin_to_signal = self.pin_to_signal + 1
-            if self.pin_to_signal > 35: self.pin_to_signal = 0
-            self.input_vals = self.sensor_vals_for_pin(self.pin_to_signal)
-                
-        pinval = self.input_vals[pin]
-        self.input_vals[pin] = None # we've returned this pin, mark as read for this scan
-        return pinval
+        if self.input_vals == None or self.remaining_input_count() < 1:
+            self.init_input_matrix()
+        return self.input_vals[pin].pop(0)
 
     def output(self, pin, value):
         return None
 
-    def set_epm(self, epm):
-        self.epm = epm
+    def init_input_matrix(self):
+        if self.input_vals == None:
+            self.input_vals = {} 
+            for i in range(36): self.input_vals[i] = []
+            self.add_all_pins_on()
+            self.add_all_pins_on()
+            self.add_off_for_pin(0)
+        
+        for i in range(36): 
+            self.add_all_pins_on()
+            self.add_off_for_pin(i)
 
-    def sensor_mask(self):
-        if self._sensor_mask == None:
-            self._sensor_mask = []
-            for i in range(36): self._sensor_mask.append(1)
-        return self._sensor_mask
+    def remaining_input_count(self):    
+        min = len(self.input_vals[0])
+        if min > 0:
+            for i in range(36): 
+                lmin = len(self.input_vals[i])
+                if min > lmin: min = lmin
+        return min
 
-    def sensor_vals_for_pin(self, pin):
-        vals = []; vals.extend( self.sensor_mask())
-        vals[pin] = 0
-        return vals
+    def add_all_pins_on(self):
+        for i in range(36): 
+            self.input_vals[i].append(1)
 
+    def add_off_for_pin(self, pin):
+        for i in range(36):
+            if i == pin: self.input_vals[i].append(0)
+            else:  self.input_vals[i].append(1)     
     

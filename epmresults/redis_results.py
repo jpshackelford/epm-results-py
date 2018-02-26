@@ -78,3 +78,19 @@ class RedisResults(object):
     
     def mark_as_synced(self, test_name):
         self.r.srem(self.namespace('unsynced_tests'), test_name)
+
+    def sensors_visited(self, test):
+        return self.r.smembers( str(test) + '.sensors_visited')
+
+    def last_test_name(self):
+        return  self.test_name(self.fetch_test_count())
+
+    def test_details(self, test):
+        test = {}
+        test['name'] = test
+        test['log']  = self.r.lrange(str(test) + '.details', 0, -1)
+        return test
+    
+    def destroy_all(self):
+        keys = self.r.keys( self._namespace + '*')
+        self.r.delete(*keys)

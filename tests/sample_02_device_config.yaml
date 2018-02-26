@@ -35,7 +35,7 @@ input:
             device: MCP1
             pin: 3
             pullup: True
-        
+
         'Open Arm|-09':
             device: MCP1
             pin: 4
@@ -50,6 +50,7 @@ input:
             device: MCP1
             pin: 6
             pullup: True
+
         'Open Arm|-03':
             device: MCP1
             pin: 7

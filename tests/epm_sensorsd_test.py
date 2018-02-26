@@ -82,20 +82,22 @@ class TestSensorsDaemon(object):
         ]
         
     def test_end_to_end(self):
-        sd = SensorsDaemonTester(
+        sd = SensorsDaemon(
             yaml_path = fpath('sample_02_device_config.yaml'),
-            namespace = 'fake_03',
+            namespace = 'fake',
             test_secs = 5,
             loop_count = 1,
-            scans_per_sec = 10
+            scans_per_sec = 20
         )
         sd.run()
+        
+        last_test = sd.rr.last_test_name()
 
-class SensorsDaemonTester(SensorsDaemon):
+        configured_sensors = sd.epm.devcfg.inputs('epm_sensors').keys()
+        configured_sensors.sort()
 
-    def initialize_epm(self):
-        self.logger.info("reading " + self.yaml_path)                        
-        self.epm = EPM(self.logger, self.epm_yaml_stream())
-        self.epm.initialize()
-        self.epm.devcfg.device('MCP1').set_epm(self.epm)
-    
+        visited_sensors = list( sd.rr.sensors_visited( last_test ))
+        visited_sensors.sort()
+
+        assert visited_sensors == configured_sensors
+        
