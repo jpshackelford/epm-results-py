@@ -1,6 +1,7 @@
 import Adafruit_GPIO as GPIO
 import importlib
 import pyaml, yaml
+import time
 
 class Pin(object):
     
@@ -19,7 +20,7 @@ class Pin(object):
     
     def use(self):
         return 'unconfigured'
-    
+        
     def __getitem__(self,key):
         return self.h[key]
     
@@ -44,10 +45,18 @@ class Pin(object):
 class InputPin(Pin):
     
     def initialize(self):
-        self.device().setup(self.pin(), GPIO.IN)
-        if 'pullup' in self.h:
-            self.device().pullup(self.pin(), bool(self.h['pullup']))
-
+        for i in range(3):
+            try:
+                self.device().setup(self.pin(), GPIO.IN)
+                if 'pullup' in self.h:
+                    self.device().pullup(self.pin(), bool(self.h['pullup']))
+                break
+            except IOError:
+                time.sleep(0.05)
+                pass
+            except ValueError:
+                raise DeviceConfigError("Error Configuring " + self.name() + " pin "+ str(self.pin()))    
+            
     def input(self):
         return self.device().input(self.pin())
     
@@ -91,12 +100,21 @@ class DeviceConfig(object):
     def initialize_devices(self, y):
         if 'import' in y.keys() and len(y['import']) > 0:
             for g,lib in y['import'].iteritems():
-                if lib.count('.') > 0:
-                    mod, cls = lib.rsplit('.', 1)
-                else:
-                    mod = lib
-                globals()[mod] = importlib.import_module(mod)
-                globals()[g]   = eval(lib)
+                
+
+                try:
+                    globals()[g] = importlib.import_module(lib)
+                    
+                except ImportError:
+
+                    if lib.count('.') > 0:
+                        mod, cls = lib.rsplit('.', 1)
+                    else:
+                        mod = lib
+
+                    globals()[mod] = importlib.import_module(mod)
+                    globals()[g]   = eval(lib)
+                    
         for key, constructor in y['construct'].iteritems():
             self.devices[key] = eval(constructor)
 
@@ -104,23 +122,23 @@ class DeviceConfig(object):
         for group, pinset in y['input'].iteritems():
             self._inputs[group] = {}
             for name, p in pinset.iteritems():
-                p['name'] = name
+                #p['name'] = name
                 if 'device' in p:
                     d = self.device(p['device'])
                     del p['device']
                 else: raise DeviceConfigError("Input pin %s has no device specified." % name)                                   
-                self._inputs[group][name] = InputPin(d,**p)
+                self._inputs[group][name] = InputPin(d,name=name,**p)
         
     def initialize_output_pins(self, y):
         for group, pinset in y['output'].iteritems():
             self._outputs[group] = {}
             for name, p in pinset.iteritems():
-                p['name'] = name
+                #p['name'] = name
                 if 'device' in p:
                     d = self.device(p['device'])
                     del p['device']
-                else: raise DeviceConfigError("Output pin %s has no device specified." % name)                                   
-                self._outputs[group][name] = OutputPin(d,**p)
+                else: raise DeviceConfigError("Output pin " + str(name) +" has no device specified. " + str(p))                                   
+                self._outputs[group][name] = OutputPin(d,name=name,**p)
     
     def configure_pins(self):
         for p in self.inputs().values(): p.initialize()

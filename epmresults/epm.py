@@ -25,15 +25,18 @@ class EPM(object):
 
             if len(new_working_sensors) > 0:
                 self.logger.info("[epmsensorsd]  The following sensors are now properly ON and ready: ")
+                self.logger.info("new_working: " + str(new_working_sensors))
                 for s in new_working_sensors:
                     self.logger.info("[epmsensorsd]  - " + s ) 
                 
             if len(new_problem_sensors) > 0:
+                self.logger.info("new_problem: " + str(new_problem_sensors))
                 self.logger.info("[epmsensorsd]  Waiting for sensors to be ON and ready: ")
                 for s in new_problem_sensors:
                     self.logger.info("[epmsensorsd]  - " + s ) 
             
             waiting_on = []; waiting_on.extend( self.sensor_names( sensors[0] ))
+            self.logger.info("waiting on: " + str(waiting_on))
             time.sleep(0.1)
             sensors = self.check_all_sensors()
             off_sensor_names = self.sensor_names( sensors[0] )
@@ -45,7 +48,7 @@ class EPM(object):
     def sensor_names(self, pin_list):
         names = []
         for pin in pin_list:
-            names.extend(pin.name())
+            names.append(pin.name())
         return names
 
     def detect_test_start(self):
