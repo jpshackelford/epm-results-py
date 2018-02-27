@@ -33,7 +33,7 @@ class EPM(object):
                     self.logger.info("[epmsensorsd]  - " + s ) 
             
             waiting_on = []; waiting_on.extend( off_sensor_names )
-            time.sleep(1.0)
+            time.sleep(0.5)
             sensors = self.check_all_sensors()
             off_sensor_names = self.sensor_names( sensors[0] )
 
