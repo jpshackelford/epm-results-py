@@ -45,7 +45,8 @@ setup(
                       'redis>=2.10.6',
                       'PyYAML>=3.12',
                       'pytz>=2018.3',
-                      'pyaml>=17.12.1'
+                      'pyaml>=17.12.1',
+                      'blessings>=1.6.1'
                      ],
     cmdclass={'test': PyTest},
     author_email='jpshack@gmail.com',
@@ -54,7 +55,7 @@ setup(
     packages=['epmresults'],
     include_package_data=True,
     platforms='any',
-    scripts = ['scripts/epmsensorsd'],
+    scripts = ['scripts/epmsensorsd','scripts/epmscan'],
     test_suite='tests',
     classifiers = [
         'Programming Language :: Python',

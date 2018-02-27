@@ -78,4 +78,3 @@ class SensorsDaemon(Service):
     
     def epm_yaml_stream(self):
         return file(self.yaml_path,'r')
-    

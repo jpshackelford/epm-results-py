@@ -1,0 +1,226 @@
+import:
+    MCP: 'Adafruit_GPIO.MCP230xx'
+    Pi: 'Adafruit_GPIO'
+
+construct:
+    MCP1: 'MCP.MCP23017(32, busnum=1)'
+    MCP2: 'MCP.MCP23017(33, busnum=1)'
+    MCP3: 'MCP.MCP23017(34, busnum=1)'
+    
+input:
+    test_trigger:
+
+       'MCP1 PIN 07': #'Open Arm|-17':
+           device: MCP1
+           pin: 7
+           pullup: True
+
+    epm_sensors:
+        
+       'MCP1 PIN 07': #'Open Arm|-17':
+           device: MCP1
+           pin: 7
+           pullup: True
+
+       'MCP1 PIN 08': #'Open Arm|-15':
+           device: MCP1
+           pin: 8
+           pullup: True
+
+       'MCP1 PIN 15': #'Open Arm|-13':
+           device: MCP1
+           pin: 15
+           pullup: True
+
+       'MCP1 PIN 16': #'Open Arm|-11':
+           device: MCP1
+           pin: 0
+           pullup: True
+
+        'MCP2 PIN 01': #'Open Arm|-09':
+            device: MCP2
+            pin: 1
+            pullup: True
+
+        'MCP2 PIN 02': #'Open Arm|-07':
+            device: MCP2
+            pin: 2
+            pullup: True
+
+        'MCP2 PIN 03': #'Open Arm|-05':
+            device: MCP2
+            pin: 3
+            pullup: True
+
+        'MCP2 PIN 04': #'Open Arm|-03':
+            device: MCP2
+            pin: 4
+            pullup: True
+
+        'MCP2 PIN 05': #'Open Arm|-01':
+            device: MCP2
+            pin: 5
+            pullup: True
+
+        'MCP2 PIN 06': #'Open Arm|01':
+            device: MCP2
+            pin: 6
+            pullup: True
+
+        'MCP2 PIN 07': #'Open Arm|03':
+            device: MCP2
+            pin: 7
+            pullup: True
+
+        'MCP2 PIN 08': #'Open Arm|05':
+            device: MCP2
+            pin: 8
+            pullup: True
+
+        'MCP2 PIN 09': #'Open Arm|07':
+            device: MCP2
+            pin: 9
+            pullup: True
+        
+        'MCP2 PIN 10': #'Open Arm|09':
+            device: MCP2
+            pin: 10
+            pullup: True
+
+        'MCP2 PIN 11': #'Open Arm|11':
+            device: MCP2
+            pin: 11
+            pullup: True
+
+        'MCP2 PIN 12': #'Open Arm|13':
+            device: MCP2
+            pin: 12
+            pullup: True
+
+        'MCP2 PIN 13': #'Open Arm|15':
+            device: MCP2
+            pin: 13
+            pullup: True
+
+        'MCP2 PIN 14': #'Open Arm|17':
+            device: MCP2
+            pin: 14
+            pullup: True
+
+        'MCP2 PIN 15': #'Closed Arm|-17':
+            device: MCP2
+            pin: 15
+            pullup: True
+
+        'MCP2 PIN 16': #'Closed Arm|-15':
+            device: MCP2
+            pin: 0
+            pullup: True
+
+        'MCP3 PIN 01': #'Open Arm|-09':
+            device: MCP3
+            pin: 1
+            pullup: True
+
+        'MCP3 PIN 02': #'Open Arm|-07':
+            device: MCP3
+            pin: 2
+            pullup: True
+
+        'MCP3 PIN 03': #'Open Arm|-05':
+            device: MCP3
+            pin: 3
+            pullup: True
+
+        'MCP3 PIN 04': #'Open Arm|-03':
+            device: MCP3
+            pin: 4
+            pullup: True
+
+        'MCP3 PIN 05': #'Open Arm|-01':
+            device: MCP3
+            pin: 5
+            pullup: True
+
+        'MCP3 PIN 06': #'Open Arm|01':
+            device: MCP3
+            pin: 6
+            pullup: True
+
+        'MCP3 PIN 07': #'Open Arm|03':
+            device: MCP3
+            pin: 7
+            pullup: True
+
+        'MCP3 PIN 08': #'Open Arm|05':
+            device: MCP3
+            pin: 8
+            pullup: True
+
+        'MCP3 PIN 09': #'Open Arm|07':
+            device: MCP3
+            pin: 9
+            pullup: True
+        
+        'MCP3 PIN 10': #'Open Arm|09':
+            device: MCP3
+            pin: 10
+            pullup: True
+
+        'MCP3 PIN 11': #'Open Arm|11':
+            device: MCP3
+            pin: 11
+            pullup: True
+
+        'MCP3 PIN 12': #'Open Arm|13':
+            device: MCP3
+            pin: 12
+            pullup: True
+
+        'MCP3 PIN 13': #'Open Arm|15':
+            device: MCP3
+            pin: 13
+            pullup: True
+
+        'MCP3 PIN 14': #'Open Arm|17':
+            device: MCP3
+            pin: 14
+            pullup: True
+
+        # 'MCP3 PIN 15': #'Closed Arm|-17':
+        #     device: MCP3
+        #     pin: 15
+        #     pullup: True
+
+        'MCP3 PIN 16': #'Closed Arm|-15':
+            device: MCP3
+            pin: 0
+            pullup: True
+            
+#    buttons:
+#        
+#        'Reset Button':
+#            device: MCP1
+#            pin: 1
+
+output:
+    leds:            
+        'MCP3 PIN 15': #'Closed Arm|-15':
+            device: MCP3
+            pin: 15
+            pullup: True
+
+#
+#        'Power':
+#           device: MCP1
+#           pin: 2
+##
+##    buzzers:
+##        
+##        'Buzzer-1':
+##            device: MCP1
+##            pin: 3
+##
+##        'Buzzer-2':
+##            device: MCP1
+##            pin: 4
