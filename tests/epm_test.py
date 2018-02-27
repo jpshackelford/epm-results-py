@@ -39,7 +39,6 @@ class TestEPM(object):
         mcp2.assert_has_calls([ call.input(2) ])
         assert results == {'Open Arm|-9'  : InputPin(device=mcp1, pin=1)}
 
-    
     def test_read_sensors_from_correct_group(self, epm):
         epm.devcfg = Mock('DeviceConfig')
         epm.devcfg.input_values = Mock(return_value = {})
@@ -66,6 +65,57 @@ class TestEPM(object):
         SignalAfterDelay(mcp1).start() # sets mcp1.input = Mock(return_value = False)
         epm.detect_test_start()
         assert mcp1.mock_calls.count( call.input(1) ) > 3
+
+    def test_read_all_sensors(self, epm):
+        mcp1 = Mock(name='mcp1')
+
+        pin1 = InputPin(device=mcp1, pin=1)
+        pin2 = InputPin(device=mcp1, pin=2)
+        pin3 = InputPin(device=mcp1, pin=3)
+        pin4 = InputPin(device=mcp1, pin=4)
+
+        pin1.input = Mock(return_value = 0)
+        pin2.input = Mock(return_value = 1)
+        pin3.input = Mock(return_value = 0)
+        pin4.input = Mock(return_value = 1)
+
+        inputs = { 'Open Arm|-6'  : pin1,  'Open Arm|-7'  : pin2,
+                   'Open Arm|-8'  : pin3,  'Open Arm|-9'  : pin4 }
+
+        epm.devcfg.inputs = Mock(return_value = inputs)
+        
+        assert epm.check_all_sensors() == { 
+            0: [pin1 ,pin3],
+            1: [pin2, pin4]
+        }
+        epm.devcfg.inputs.assert_called_with('epm_sensors')
+
+    def test_detect_sensors_ready(self, epm):
+        mcp1 = Mock(name='mcp1')
+
+        pin1 = InputPin(device=mcp1, pin=1, name='a')
+        pin2 = InputPin(device=mcp1, pin=2, name='b')
+        pin3 = InputPin(device=mcp1, pin=3, name='c')
+        pin4 = InputPin(device=mcp1, pin=4, name='d')
+
+        pin1.input = Mock(side_effect = [0,0,1])
+        pin2.input = Mock(side_effect = [0,1,1])
+        pin3.input = Mock(side_effect = [1,0,1])
+        pin4.input = Mock(side_effect = [1,1,1])
+
+        inputs = { 'a' : pin1,  'b' : pin2, 'c' : pin3,  'd' : pin4 }
+        epm.devcfg.inputs = Mock(return_value = inputs)
+        epm.logger.info = Mock(name='logger')
+        epm.detect_sensors_ready()
+        assert epm.logger.info.call_args_list == [
+            call('[epmsensorsd]  Waiting for sensors to be ON and ready: '),
+            call('[epmsensorsd]  - a'),
+            call('[epmsensorsd]  - b'),
+            call('[epmsensorsd]  The following sensors are now properly ON and ready: '),
+            call('[epmsensorsd]  - a'),
+            call('[epmsensorsd]  Waiting for sensors to be ON and ready: '),
+            call('[epmsensorsd]  - c'),
+            call('[epmsensorsd]  All 4 sensors are now properly ON and ready.')  ]
 
 class SignalAfterDelay(Thread):
 

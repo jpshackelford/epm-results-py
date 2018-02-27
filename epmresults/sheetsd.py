@@ -51,11 +51,11 @@ class SheetsDaemon(Service):
         
 
     def run(self):
-        self.logger.info("sheetsd service started")        
+        self.logger.info("[sheetsd]  service started")        
         while not self.got_sigterm():
             self.sync_all()
             time.sleep(1)
-        self.logger.info("sheetsd service stopped")
+        self.logger.info("[sheetsd]  service stopped")
 
     
     def is_test_complete(self,test_name):
@@ -73,9 +73,9 @@ class SheetsDaemon(Service):
         return []
 
     def create_test_sheet(self,test_name):
-        self.logger.debug("Adding new tab for %s. " % test_name)
+        self.logger.debug("[sheetsd]  Adding new tab for %s. " % test_name)
         
-        self.logger.debug("Added new tab for %s " % test_name)
+        self.logger.debug("[sheetsd]  Added new tab for %s " % test_name)
         return True
 
     def sync_all(self):
@@ -83,12 +83,12 @@ class SheetsDaemon(Service):
             self.sync_test_results(test)
         
     def sync_test_results(self,test_name):        
-        self.logger.debug("Syncing tab for %s. " % test_name)        
+        self.logger.debug("[sheetsd]  Syncing tab for %s. " % test_name)        
 
         if not(test_name in tab_names()):
             create_test_sheet(test_name)
         
-        self.logger.debug("Syncing tab for %s. " % test_name)
+        self.logger.debug("[sheetsd]  Syncing tab for %s. " % test_name)
         
         if is_test_complete(test_name):
             self.rr.mark_as_synced(test_name)
