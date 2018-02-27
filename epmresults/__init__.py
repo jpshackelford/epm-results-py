@@ -2,7 +2,7 @@ from epmresults.redis_results    import RedisResults
 from epmresults.device_config    import DeviceConfig, DeviceConfigError, Pin, InputPin, OutputPin
 from epmresults.epm              import EPM
 from epmresults.single_test_run  import SingleTestRun
-from epmresults.sheetsd          import SheetsDaemon
+# from epmresults.sheetsd          import SheetsDaemon
 from epmresults.epmsensorsd      import SensorsDaemon
 from epmresults.fake_device      import FakeDevice
 
@@ -15,7 +15,7 @@ __all__ = [
     DeviceConfigError,
     EPM,
     SingleTestRun,
-    SheetsDaemon,
+#   SheetsDaemon,
     SensorsDaemon,
     FakeDevice
 ]

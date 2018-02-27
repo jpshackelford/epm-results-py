@@ -1,7 +1,4 @@
-#
 # SensorsDaemon connects EPM sensors to redis datastore.
-#
-#
 import logging
 
 from logging.handlers import SysLogHandler
@@ -81,25 +78,3 @@ class SensorsDaemon(Service):
     def epm_yaml_stream(self):
         return file(self.yaml_path,'r')
     
-if __name__ == '__main__':
-    import sys
-
-    service_name = sys.argv[0]
-    
-    if len(sys.argv) != 2:
-        sys.exit('Syntax: %s COMMAND' % service_name)
-
-    cmd = sys.argv[1].lower()
-    daemon = SensorsDaemon()
-
-    if cmd == 'start':
-        daemon.start()
-    elif cmd == 'stop':
-        daemon.stop()
-    elif cmd == 'status':
-        if daemon.is_running():
-            print('%s is running.' % service_name)
-        else:
-            print('%s is not running.' % service_name)
-    else:
-        sys.exit('Unknown command "%s".' % cmd)
