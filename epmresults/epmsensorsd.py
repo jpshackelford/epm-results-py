@@ -42,9 +42,10 @@ class SensorsDaemon(Service):
         self.rr  = None
 
     def run(self):
-        self.logger.info("epmsensorsd service started")
+        self.logger.info("[epmsensorsd]  service started")
         self.initialize_system()
         while(not self.got_sigterm()):
+            self.epm.detect_sensors_ready()
             self.epm.signal_ready()
             self.epm.detect_test_start()
             secs = int(self.test_secs or 600)
@@ -58,10 +59,10 @@ class SensorsDaemon(Service):
             if self.loop_count: self.loop_count = self.loop_count - 1
             if self.loop_count < 1: break
             
-        self.logger.info("epmsensorsd service stopped")        
+        self.logger.info("[epmsensorsd]  service stopped")        
     
     def initialize_system(self):
-        self.logger.info("initializing epm sensors and data collection")                
+        self.logger.info("[epmsensorsd]  initializing epm sensors and data collection")                
         self.initialize_redis()
         self.initialize_epm()
     
@@ -74,7 +75,7 @@ class SensorsDaemon(Service):
         self.rr.redis().ping()
         
     def initialize_epm(self):
-        self.logger.info("reading " + self.yaml_path)                        
+        self.logger.info("[epmsensorsd]  reading " + self.yaml_path)                        
         self.epm = self.epm_class(self.logger, self.epm_yaml_stream())
         self.epm.initialize()    
     

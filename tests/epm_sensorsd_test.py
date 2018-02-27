@@ -66,9 +66,11 @@ class TestSensorsDaemon(object):
         assert epm_mock.mock_calls == [
             call(logging_mock, yaml_mock()),
             call().initialize(),
+            call().detect_sensors_ready(),
             call().signal_ready(),
             call().detect_test_start(),
             call().signal_test_complete(),
+            call().detect_sensors_ready(),
             call().signal_ready(),
             call().detect_test_start(),
             call().signal_test_complete()
