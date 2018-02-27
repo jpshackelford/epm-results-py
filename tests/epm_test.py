@@ -98,10 +98,10 @@ class TestEPM(object):
         pin3 = InputPin(device=mcp1, pin=3, name='c')
         pin4 = InputPin(device=mcp1, pin=4, name='d')
 
-        pin1.input = Mock(side_effect = [0,0,1])
-        pin2.input = Mock(side_effect = [0,1,1])
-        pin3.input = Mock(side_effect = [1,0,1])
-        pin4.input = Mock(side_effect = [1,1,1])
+        pin1.input = Mock(side_effect = [0,0,0,1])
+        pin2.input = Mock(side_effect = [0,1,1,1])
+        pin3.input = Mock(side_effect = [1,0,0,1])
+        pin4.input = Mock(side_effect = [1,1,1,1])
 
         inputs = { 'a' : pin1,  'b' : pin2, 'c' : pin3,  'd' : pin4 }
         epm.devcfg.inputs = Mock(return_value = inputs)
@@ -110,9 +110,9 @@ class TestEPM(object):
         assert epm.logger.info.call_args_list == [
             call('[epmsensorsd]  Waiting for sensors to be ON and ready: '),
             call('[epmsensorsd]  - a'),
-            call('[epmsensorsd]  - b'),
+            call('[epmsensorsd]  - b'),          
             call('[epmsensorsd]  The following sensors are now properly ON and ready: '),
-            call('[epmsensorsd]  - a'),
+            call('[epmsensorsd]  - b'),
             call('[epmsensorsd]  Waiting for sensors to be ON and ready: '),
             call('[epmsensorsd]  - c'),
             call('[epmsensorsd]  All 4 sensors are now properly ON and ready.')  ]
