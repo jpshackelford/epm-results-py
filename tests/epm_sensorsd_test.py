@@ -87,7 +87,7 @@ class TestSensorsDaemon(object):
         sd = SensorsDaemon(
             yaml_path = fpath('sample_02_device_config.yaml'),
             namespace = 'fake',
-            test_secs = 5,
+            test_secs = 7,
             loop_count = 1,
             scans_per_sec = 20
         )

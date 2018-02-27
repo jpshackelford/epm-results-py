@@ -24,12 +24,10 @@ class EPM(object):
 
             if len(new_working_sensors) > 0:
                 self.logger.info("[epmsensorsd]  The following sensors are now properly ON and ready: ")
-                self.logger.info("new_working: " + str(new_working_sensors))
                 for s in new_working_sensors:
                     self.logger.info("[epmsensorsd]  - " + s ) 
                 
             if len(new_problem_sensors) > 0:
-                self.logger.info("new_problem: " + str(new_problem_sensors))
                 self.logger.info("[epmsensorsd]  Waiting for sensors to be ON and ready: ")
                 for s in new_problem_sensors:
                     self.logger.info("[epmsensorsd]  - " + s ) 
